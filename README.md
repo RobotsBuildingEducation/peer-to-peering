@@ -1,2 +1,3 @@
 # peer-to-peering
-peer-to-peering social network technology
+
+This software represents a skeleton for a social media application
