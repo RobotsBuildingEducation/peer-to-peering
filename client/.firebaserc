@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "peer-to-peering"
+  },
+  "targets": {},
+  "etags": {
+    "peer-to-peering": {
+      "extensionInstances": {}
+    }
   }
 }
