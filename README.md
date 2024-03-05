@@ -2,11 +2,13 @@
 
 This software represents a skeleton for a social media application
 
-### Frontend
+## Frontend
 
 The application uses a common way to setup React applications with Vite.
+<br>
+<br>
 
-### Firebase
+## Firebase
 
 The application is using a common cloud provider with Google's Firebase.
 
