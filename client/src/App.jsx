@@ -8,7 +8,7 @@ import { Auth } from "./components/Auth/Auth";
 import { createUser } from "./App.utilities";
 import { WelcomePage } from "./components/WelcomePage/WelcomePage";
 import { Feed } from "./components/Feed/Feed";
-import { SignOut } from "./components/Auth/Signout";
+import { SignOut } from "./components/Auth/SignOut";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
