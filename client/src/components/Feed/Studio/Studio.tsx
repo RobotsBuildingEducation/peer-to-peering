@@ -1,38 +1,30 @@
 import React, { useState } from "react";
 
-import { firestore } from "../../../database/firebaseResources";
-import { doc, setDoc, collection } from "firebase/firestore";
+// Utility function to publish content to Firestore
+import { publishContent } from "./Studio.utilities";
 
+/**
+ * Studio component for creating and submitting new posts.
+ * @param {Object} userData - Object containing information about the current user.
+ */
 export const Studio = ({ userData }) => {
+  // State for managing the input value of the post content
   const [postContent, setPostContent] = useState("");
 
+  /**
+   * Handles the submission of a new post.
+   * Clears the content input and publishes the post using the publishContent utility function.
+   */
   const handlePostSubmit = async () => {
-    const userId = userData?.uid;
+    const userId = userData?.uid; // Extract user ID from userData
+    let content = postContent; // Content to be submitted
     try {
-      // Create a new document reference with a generated ID in the global "posts" collection
-      const newPostRef = doc(collection(firestore, "posts"));
-
-      // Use the same document ID for the user's post subcollection
-      const userPostRef = doc(
-        firestore,
-        `users/${userId}/posts`,
-        newPostRef.id
-      );
-
-      // Construct the post data
-      const postData = {
-        content: postContent,
-        userId: userId,
-        createdAt: new Date(),
-      };
-
-      // Set the post in the global "posts" collection and the user's subcollection with the same ID
-      await setDoc(newPostRef, postData);
-      await setDoc(userPostRef, postData);
-
-      setPostContent(""); // Clear the textarea after submission
-      alert("Post submitted successfully!");
+      // Clear the input field before submission attempt
+      setPostContent("");
+      // Attempt to publish content to the database
+      await publishContent(userId, content);
     } catch (error) {
+      // Log and alert the error if submission fails
       console.error("Error submitting post: ", error);
       alert("Failed to submit post.");
     }
@@ -42,12 +34,14 @@ export const Studio = ({ userData }) => {
     <div>
       <b>The Studio</b>
       <br />
+      {/* Textarea for inputting new post content */}
       <textarea
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}
         placeholder="What's on your mind?"
       ></textarea>
       <br />
+      {/* Button to trigger post submission */}
       <button onClick={handlePostSubmit}>Submit Post</button>
     </div>
   );
